@@ -1,6 +1,6 @@
 package base_grammar
 
-// 1
+// 1 修改的是局部变量
 func deferReturn1() int {
 	a := 1
 	defer func() {
@@ -9,7 +9,7 @@ func deferReturn1() int {
 	return a
 }
 
-// 2
+// 2 defer可以读取到有名的返回值
 func deferReturn2() (a int) {
 	defer func() {
 		a++
