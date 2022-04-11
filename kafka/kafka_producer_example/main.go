@@ -1,4 +1,4 @@
-package kafka
+package main
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/Shopify/sarama"
 )
 
-func Producer() {
+func producer() {
 	config := sarama.NewConfig()
 	config.Producer.RequiredAcks = sarama.WaitForAll
 	config.Producer.Partitioner = sarama.NewRandomPartitioner
@@ -14,7 +14,7 @@ func Producer() {
 	config.Producer.Return.Errors =true
 	config.Version = sarama.V3_1_0_0
 
-	producer, err := sarama.NewAsyncProducer([]string{"localhost:9092"}, config)
+	producer, err := sarama.NewAsyncProducer([]string{"localhost:9093"}, config)
 	if err != nil {
 		fmt.Printf("producer create producer error:%v", err)
 		return
@@ -38,11 +38,13 @@ func Producer() {
 
 		select {
 		case suc := <-producer.Successes():
-			fmt.Printf("offset: %d, timestamp: %s", suc.Offset, suc.Timestamp.String())
+			fmt.Printf("offset: %d, timestamp: %s\n", suc.Offset, suc.Timestamp.String())
 		case fail := <-producer.Errors():
 			fmt.Printf("err: %v\n", fail.Err)
 		}
 	}
 }
 
-
+func main()  {
+	producer()
+}

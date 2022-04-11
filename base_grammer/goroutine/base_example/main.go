@@ -12,6 +12,7 @@ func main() {
 			time.Sleep(time.Second)
 		}
 	}()
+	// 主协程执行完后，所有协程都会结束
 	for i := 0; i < 10; i++ {
 		fmt.Println("main ", i)
 		time.Sleep(time.Second)
